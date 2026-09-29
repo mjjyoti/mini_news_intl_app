@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/utils/date_utils.dart';
 import '../../../favorites/presentation/providers/favorites_provider.dart';
@@ -9,6 +10,7 @@ import '../../domain/entities/article.dart';
 
 class ArticleDetailScreen extends ConsumerWidget {
   final Article article;
+
   const ArticleDetailScreen({super.key, required this.article});
 
   Future<void> _openUrl(String? url) async {
@@ -21,7 +23,9 @@ class ArticleDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isFavorite = ref.watch(favoritesProvider.select((s) => s.isFavorite(article.id)));
+    final isFavorite = ref.watch(
+      favoritesProvider.select((s) => s.isFavorite(article.id)),
+    );
 
     return Scaffold(
       body: CustomScrollView(
@@ -39,7 +43,11 @@ class ArticleDetailScreen extends ConsumerWidget {
                   ref.read(favoritesProvider.notifier).toggleFavorite(article);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(isFavorite ? 'Removed from favorites' : 'Saved to favorites'),
+                      content: Text(
+                        isFavorite
+                            ? 'Removed from favorites'
+                            : 'Saved to favorites',
+                      ),
                       duration: const Duration(seconds: 1),
                     ),
                   );
@@ -48,12 +56,13 @@ class ArticleDetailScreen extends ConsumerWidget {
             ],
             flexibleSpace: article.imageUrl != null
                 ? FlexibleSpaceBar(
-              background: CachedNetworkImage(
-                imageUrl: article.imageUrl!,
-                fit: BoxFit.cover,
-                errorWidget: (_, __, ___) => Container(color: AppTheme.primaryColor),
-              ),
-            )
+                    background: CachedNetworkImage(
+                      imageUrl: article.imageUrl!,
+                      fit: BoxFit.cover,
+                      errorWidget: (_, __, ___) =>
+                          Container(color: AppTheme.primaryColor),
+                    ),
+                  )
                 : null,
           ),
           SliverToBoxAdapter(
@@ -64,7 +73,10 @@ class ArticleDetailScreen extends ConsumerWidget {
                 children: [
                   if (article.sourceName != null)
                     Chip(
-                      label: Text(article.sourceName!, style: const TextStyle(fontSize: 12)),
+                      label: Text(
+                        article.sourceName!,
+                        style: const TextStyle(fontSize: 12),
+                      ),
                       backgroundColor: AppTheme.primaryColor.withOpacity(0.6),
                       side: BorderSide.none,
                       visualDensity: VisualDensity.compact,
@@ -81,22 +93,36 @@ class ArticleDetailScreen extends ConsumerWidget {
                   Row(
                     children: [
                       if (article.author != null) ...[
-                        Icon(Icons.person_outline, size: 16, color: Colors.grey.shade600),
+                        Icon(
+                          Icons.person_outline,
+                          size: 16,
+                          color: Colors.grey.shade600,
+                        ),
                         const SizedBox(width: 4),
                         Flexible(
                           child: Text(
                             article.author!,
-                            style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey.shade600,
+                            ),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         const SizedBox(width: 12),
                       ],
-                      Icon(Icons.access_time, size: 16, color: Colors.grey.shade600),
+                      Icon(
+                        Icons.access_time,
+                        size: 16,
+                        color: Colors.grey.shade600,
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         AppDateUtils.formatFull(article.publishedAt),
-                        style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey.shade600,
+                        ),
                       ),
                     ],
                   ),
@@ -104,13 +130,24 @@ class ArticleDetailScreen extends ConsumerWidget {
                   if (article.description != null)
                     Text(
                       article.description!,
-                      style: const TextStyle(fontSize: 16, height: 1.6, color: AppTheme.textPrimary),
+                      style: const TextStyle(
+                        fontSize: 16,
+                        height: 1.6,
+                        color: AppTheme.textPrimary,
+                      ),
                     ),
                   if (article.content != null) ...[
                     const SizedBox(height: 16),
                     Text(
-                      article.content!.replaceAll(RegExp(r'\[\+\d+ chars\]'), ''),
-                      style: const TextStyle(fontSize: 15, height: 1.6, color: AppTheme.textSecondary),
+                      article.content!.replaceAll(
+                        RegExp(r'\[\+\d+ chars\]'),
+                        '',
+                      ),
+                      style: const TextStyle(
+                        fontSize: 15,
+                        height: 1.6,
+                        color: AppTheme.textSecondary,
+                      ),
                     ),
                   ],
                   if (article.url != null) ...[

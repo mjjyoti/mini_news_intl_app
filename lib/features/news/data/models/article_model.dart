@@ -19,7 +19,9 @@ class ArticleModel extends Article {
     final publishedAtStr = json['publishedAt'] as String?;
 
     return ArticleModel(
-      id: url.isNotEmpty ? url : (json['title'] as String? ?? '').hashCode.toString(),
+      id: url.isNotEmpty
+          ? url
+          : (json['title'] as String? ?? '').hashCode.toString(),
       title: json['title'] as String? ?? 'Untitled',
       description: json['description'] as String?,
       content: json['content'] as String?,
@@ -27,7 +29,9 @@ class ArticleModel extends Article {
       imageUrl: json['urlToImage'] as String?,
       sourceName: source?['name'] as String?,
       author: json['author'] as String?,
-      publishedAt: publishedAtStr != null ? DateTime.tryParse(publishedAtStr) : null,
+      publishedAt: publishedAtStr != null
+          ? DateTime.tryParse(publishedAtStr)
+          : null,
     );
   }
 
@@ -55,7 +59,9 @@ class ArticleModel extends Article {
       imageUrl: map['imageUrl'] as String?,
       sourceName: map['sourceName'] as String?,
       author: map['author'] as String?,
-      publishedAt: map['publishedAt'] != null ? DateTime.tryParse(map['publishedAt'] as String) : null,
+      publishedAt: map['publishedAt'] != null
+          ? DateTime.tryParse(map['publishedAt'] as String)
+          : null,
     );
   }
 

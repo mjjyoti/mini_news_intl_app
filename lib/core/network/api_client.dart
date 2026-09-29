@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+
 import '../constants/api_constants.dart';
 import '../errors/exceptions.dart';
 
@@ -9,22 +11,22 @@ class ApiClient {
   ApiClient({http.Client? client}) : client = client ?? http.Client();
 
   Future<Map<String, dynamic>> get(
-      String endpoint, {
-        Map<String, String>? queryParams,
-      }) async {
+    String endpoint, {
+    Map<String, String>? queryParams,
+  }) async {
     final uri = Uri.parse('${ApiConstants.baseUrl}$endpoint').replace(
-      queryParameters: {
-        'apiKey': ApiConstants.apiKey,
-        ...?queryParams,
-      },
+      queryParameters: {'apiKey': ApiConstants.apiKey, ...?queryParams},
     );
 
     try {
       final response = await client
-          .get(uri, headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      })
+          .get(
+            uri,
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+          )
           .timeout(const Duration(seconds: 30));
 
       return _handleResponse(response);
@@ -49,7 +51,8 @@ class ApiClient {
       return body;
     }
 
-    final message = body['message'] as String? ??
+    final message =
+        body['message'] as String? ??
         'Request failed with status ${response.statusCode}';
     throw ServerException(message: message, statusCode: response.statusCode);
   }

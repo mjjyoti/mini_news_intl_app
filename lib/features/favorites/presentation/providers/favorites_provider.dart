@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../shared/providers/providers.dart';
 import '../../../news/domain/entities/article.dart';
 
@@ -46,7 +47,10 @@ class FavoritesNotifier extends StateNotifier<FavoritesState> {
     final result = await _ref.read(favoritesRepositoryProvider).getFavorites();
 
     if (result.failure != null) {
-      state = state.copyWith(status: FavoritesStatus.error, errorMessage: result.failure!.message);
+      state = state.copyWith(
+        status: FavoritesStatus.error,
+        errorMessage: result.failure!.message,
+      );
     } else {
       state = state.copyWith(
         status: FavoritesStatus.success,
@@ -81,6 +85,7 @@ class FavoritesNotifier extends StateNotifier<FavoritesState> {
   }
 }
 
-final favoritesProvider = StateNotifierProvider<FavoritesNotifier, FavoritesState>((ref) {
-  return FavoritesNotifier(ref);
-});
+final favoritesProvider =
+    StateNotifierProvider<FavoritesNotifier, FavoritesState>((ref) {
+      return FavoritesNotifier(ref);
+    });

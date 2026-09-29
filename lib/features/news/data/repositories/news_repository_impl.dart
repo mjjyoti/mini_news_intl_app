@@ -15,10 +15,16 @@ class NewsRepositoryImpl implements NewsRepository {
     int page = 1,
   }) async {
     try {
-      final articles = await remoteDataSource.getTopHeadlines(category: category, page: page);
+      final articles = await remoteDataSource.getTopHeadlines(
+        category: category,
+        page: page,
+      );
       return (articles: articles, failure: null);
     } on ServerException catch (e) {
-      return (articles: <Article>[], failure: ServerFailure(e.message, statusCode: e.statusCode));
+      return (
+        articles: <Article>[],
+        failure: ServerFailure(e.message, statusCode: e.statusCode),
+      );
     } on NetworkException catch (e) {
       return (articles: <Article>[], failure: NetworkFailure(e.message));
     } catch (e) {
@@ -32,10 +38,16 @@ class NewsRepositoryImpl implements NewsRepository {
     int page = 1,
   }) async {
     try {
-      final articles = await remoteDataSource.searchArticles(query: query, page: page);
+      final articles = await remoteDataSource.searchArticles(
+        query: query,
+        page: page,
+      );
       return (articles: articles, failure: null);
     } on ServerException catch (e) {
-      return (articles: <Article>[], failure: ServerFailure(e.message, statusCode: e.statusCode));
+      return (
+        articles: <Article>[],
+        failure: ServerFailure(e.message, statusCode: e.statusCode),
+      );
     } on NetworkException catch (e) {
       return (articles: <Article>[], failure: NetworkFailure(e.message));
     } catch (e) {

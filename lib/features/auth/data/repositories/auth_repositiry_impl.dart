@@ -11,15 +11,24 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl({required this.localDataSource});
 
   @override
-  Future<({User? user, Failure? failure})> login(String email, String password) async {
+  Future<({User? user, Failure? failure})> login(
+    String email,
+    String password,
+  ) async {
     if (email.trim().isEmpty || password.trim().isEmpty) {
-      return (user: null, failure: const AuthFailure('Email and password are required'));
+      return (
+        user: null,
+        failure: const AuthFailure('Email and password are required'),
+      );
     }
 
-    if (email.toLowerCase() != AppConstants.demoEmail || password != AppConstants.demoPassword) {
+    if (email.toLowerCase() != AppConstants.demoEmail ||
+        password != AppConstants.demoPassword) {
       return (
-      user: null,
-      failure: const AuthFailure('Invalid credentials. Use demo@news.com / password123'),
+        user: null,
+        failure: const AuthFailure(
+          'Invalid credentials. Use demo@news.com / password123',
+        ),
       );
     }
 

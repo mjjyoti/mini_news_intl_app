@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../core/constants/api_constants.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../providers/news_provider.dart';
@@ -32,11 +33,14 @@ class CategoryChips extends ConsumerWidget {
               ),
             ),
             selected: isSelected,
-            onSelected: (_) => ref.read(newsProvider.notifier).changeCategory(category),
+            onSelected: (_) =>
+                ref.read(newsProvider.notifier).changeCategory(category),
             selectedColor: AppTheme.primaryColor,
             backgroundColor: Colors.white,
             checkmarkColor: Colors.white,
-            side: BorderSide(color: isSelected ? AppTheme.primaryColor : Colors.grey.shade300),
+            side: BorderSide(
+              color: isSelected ? AppTheme.primaryColor : Colors.grey.shade300,
+            ),
             showCheckmark: false,
           );
         },

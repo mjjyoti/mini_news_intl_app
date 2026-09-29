@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'core/constants/app_constants.dart';
 import 'core/theme/app_theme.dart';
 import 'features/auth/presentation/providers/auth_provider.dart';
@@ -27,9 +28,7 @@ class NewsIntelligenceApp extends ConsumerWidget {
     switch (authState.status) {
       case AuthStatus.initial:
       case AuthStatus.loading:
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
-        );
+        return const Scaffold(body: Center(child: CircularProgressIndicator()));
       case AuthStatus.authenticated:
         return const HomeShell();
       case AuthStatus.unauthenticated:
@@ -49,11 +48,7 @@ class HomeShell extends ConsumerStatefulWidget {
 class _HomeShellState extends ConsumerState<HomeShell> {
   int _currentIndex = 0;
 
-  final _screens = const [
-    NewsFeedScreen(),
-    SearchScreen(),
-    FavoritesScreen(),
-  ];
+  final _screens = const [NewsFeedScreen(), SearchScreen(), FavoritesScreen()];
 
   final _titles = const ['News Feed', 'Search', 'Favorites'];
 
@@ -91,10 +86,7 @@ class _HomeShellState extends ConsumerState<HomeShell> {
           ),
         ],
       ),
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _screens,
-      ),
+      body: IndexedStack(index: _currentIndex, children: _screens),
       bottomNavigationBar: BottomNavigationBar(
         selectedIconTheme: IconThemeData(color: AppTheme.surfaceColor),
         selectedItemColor: AppTheme.surfaceColor,

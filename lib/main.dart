@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import 'app.dart';
@@ -13,9 +12,5 @@ Future<void> main() async {
   await Hive.openBox(AppConstants.hiveAuthBox);
   await Hive.openBox(AppConstants.hiveFavoritesBox);
 
-  runApp(
-    const ProviderScope(
-      child: NewsIntelligenceApp(),
-    ),
-  );
+  runApp(const ProviderScope(child: NewsIntelligenceApp()));
 }

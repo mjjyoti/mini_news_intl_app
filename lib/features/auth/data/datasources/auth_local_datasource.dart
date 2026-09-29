@@ -1,11 +1,15 @@
 import 'package:hive_flutter/hive_flutter.dart';
+
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/errors/exceptions.dart';
 
 abstract class AuthLocalDataSource {
   Future<void> saveLoginState(String email);
+
   Future<void> clearLoginState();
+
   Future<bool> isLoggedIn();
+
   Future<String?> getEmail();
 }
 

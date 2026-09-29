@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../theme/app_theme.dart';
 
 class ErrorDisplay extends StatelessWidget {
@@ -15,15 +16,25 @@ class ErrorDisplay extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline_rounded, size: 64, color: AppTheme.errorColor.withOpacity(0.7)),
+            Icon(
+              Icons.error_outline_rounded,
+              size: 64,
+              color: AppTheme.errorColor.withOpacity(0.7),
+            ),
             const SizedBox(height: 16),
             Text(
               'Something went wrong',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
-            Text(message, style: const TextStyle(color: AppTheme.textSecondary), textAlign: TextAlign.center),
+            Text(
+              message,
+              style: const TextStyle(color: AppTheme.textSecondary),
+              textAlign: TextAlign.center,
+            ),
             if (onRetry != null) ...[
               const SizedBox(height: 24),
               ElevatedButton.icon(

@@ -1,7 +1,7 @@
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failures.dart';
-import '../../../news/domain/entities/article.dart';
 import '../../../news/data/models/article_model.dart';
+import '../../../news/domain/entities/article.dart';
 import '../../domain/repositories/favorites_repository.dart';
 import '../datasources/favorites_local_datasource.dart';
 
@@ -23,7 +23,9 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
   }
 
   @override
-  Future<({bool success, Failure? failure})> addFavorite(Article article) async {
+  Future<({bool success, Failure? failure})> addFavorite(
+    Article article,
+  ) async {
     try {
       await localDataSource.addFavorite(ArticleModel.fromEntity(article));
       return (success: true, failure: null);
@@ -35,7 +37,9 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
   }
 
   @override
-  Future<({bool success, Failure? failure})> removeFavorite(String articleId) async {
+  Future<({bool success, Failure? failure})> removeFavorite(
+    String articleId,
+  ) async {
     try {
       await localDataSource.removeFavorite(articleId);
       return (success: true, failure: null);
@@ -47,5 +51,6 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
   }
 
   @override
-  Future<bool> isFavorite(String articleId) => localDataSource.isFavorite(articleId);
+  Future<bool> isFavorite(String articleId) =>
+      localDataSource.isFavorite(articleId);
 }

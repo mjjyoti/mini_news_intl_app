@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../providers/auth_provider.dart';
@@ -14,7 +15,9 @@ class LoginScreen extends ConsumerStatefulWidget {
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController(text: AppConstants.demoEmail);
-  final _passwordController = TextEditingController(text: AppConstants.demoPassword);
+  final _passwordController = TextEditingController(
+    text: AppConstants.demoPassword,
+  );
   bool _obscurePassword = true;
 
   @override
@@ -26,10 +29,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   void _submit() {
     if (_formKey.currentState?.validate() ?? false) {
-      ref.read(authProvider.notifier).login(
-        _emailController.text.trim(),
-        _passwordController.text,
-      );
+      ref
+          .read(authProvider.notifier)
+          .login(_emailController.text.trim(), _passwordController.text);
     }
   }
 
@@ -41,7 +43,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     ref.listen<AuthState>(authProvider, (prev, next) {
       if (next.status == AuthStatus.error && next.errorMessage != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(next.errorMessage!), backgroundColor: AppTheme.errorColor),
+          SnackBar(
+            content: Text(next.errorMessage!),
+            backgroundColor: AppTheme.errorColor,
+          ),
         );
       }
     });
@@ -62,7 +67,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       color: AppTheme.primaryColor.withOpacity(0.1),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.newspaper, size: 56, color: AppTheme.primaryColor),
+                    child: const Icon(
+                      Icons.newspaper,
+                      size: 56,
+                      color: AppTheme.primaryColor,
+                    ),
                   ),
                   const SizedBox(height: 24),
                   Text(
@@ -73,7 +82,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text('Mini News Intelligence', style: TextStyle(color: AppTheme.textSecondary)),
+                  const Text(
+                    'Mini News Intelligence',
+                    style: TextStyle(color: AppTheme.textSecondary),
+                  ),
                   const SizedBox(height: 40),
                   TextFormField(
                     controller: _emailController,
@@ -83,7 +95,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       prefixIcon: Icon(Icons.email_outlined),
                     ),
                     validator: (v) {
-                      if (v == null || v.trim().isEmpty) return 'Email is required';
+                      if (v == null || v.trim().isEmpty)
+                        return 'Email is required';
                       if (!v.contains('@')) return 'Enter a valid email';
                       return null;
                     },
@@ -96,8 +109,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       labelText: 'Password',
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
-                        icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
-                        onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                        icon: Icon(
+                          _obscurePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                        onPressed: () => setState(
+                          () => _obscurePassword = !_obscurePassword,
+                        ),
                       ),
                     ),
                     validator: (v) {
@@ -114,10 +133,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       onPressed: isLoading ? null : _submit,
                       child: isLoading
                           ? const SizedBox(
-                        height: 22,
-                        width: 22,
-                        child: CircularProgressIndicator(strokeWidth: 2.5, color: Colors.white),
-                      )
+                              height: 22,
+                              width: 22,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.5,
+                                color: Colors.white,
+                              ),
+                            )
                           : const Text('Sign In'),
                     ),
                   ),
@@ -130,7 +152,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                     child: const Text(
                       'Demo: demo@news.com | password123',
-                      style: TextStyle(fontSize: 13, color: AppTheme.primaryColor),
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: AppTheme.primaryColor,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   ),

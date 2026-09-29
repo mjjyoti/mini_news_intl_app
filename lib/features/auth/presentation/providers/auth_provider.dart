@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../shared/providers/providers.dart';
 import '../../domain/entities/user.dart';
 
@@ -48,12 +49,21 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<void> login(String email, String password) async {
     state = state.copyWith(status: AuthStatus.loading, errorMessage: null);
-    final result = await _ref.read(authRepositoryProvider).login(email, password);
+    final result = await _ref
+        .read(authRepositoryProvider)
+        .login(email, password);
 
     if (result.failure != null) {
-      state = state.copyWith(status: AuthStatus.error, errorMessage: result.failure!.message);
+      state = state.copyWith(
+        status: AuthStatus.error,
+        errorMessage: result.failure!.message,
+      );
     } else {
-      state = state.copyWith(status: AuthStatus.authenticated, user: result.user, errorMessage: null);
+      state = state.copyWith(
+        status: AuthStatus.authenticated,
+        user: result.user,
+        errorMessage: null,
+      );
     }
   }
 

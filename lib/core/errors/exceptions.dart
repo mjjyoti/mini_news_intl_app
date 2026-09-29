@@ -10,6 +10,7 @@ class ServerException implements Exception {
 
 class CacheException implements Exception {
   final String message;
+
   const CacheException({required this.message});
 
   @override
@@ -18,6 +19,7 @@ class CacheException implements Exception {
 
 class NetworkException implements Exception {
   final String message;
+
   const NetworkException({required this.message});
 
   @override
@@ -26,6 +28,7 @@ class NetworkException implements Exception {
 
 class AuthException implements Exception {
   final String message;
+
   const AuthException({required this.message});
 
   @override

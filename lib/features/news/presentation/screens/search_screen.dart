@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../core/widgets/empty_state.dart';
 import '../../../../core/widgets/error_display.dart';
 import '../../../../core/widgets/loading_widget.dart';
@@ -26,7 +28,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
       ref.read(searchProvider.notifier).loadMore();
     }
   }
@@ -62,13 +65,13 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               prefixIcon: const Icon(Icons.search),
               suffixIcon: _controller.text.isNotEmpty
                   ? IconButton(
-                icon: const Icon(Icons.clear),
-                onPressed: () {
-                  _controller.clear();
-                  ref.read(searchProvider.notifier).clear();
-                  setState(() {});
-                },
-              )
+                      icon: const Icon(Icons.clear),
+                      onPressed: () {
+                        _controller.clear();
+                        ref.read(searchProvider.notifier).clear();
+                        setState(() {});
+                      },
+                    )
                   : null,
             ),
             textInputAction: TextInputAction.search,

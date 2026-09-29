@@ -1,5 +1,5 @@
-import '../entities/article.dart';
 import '../../../../core/errors/failures.dart';
+import '../entities/article.dart';
 
 abstract class NewsRepository {
   Future<({List<Article> articles, Failure? failure})> getTopHeadlines({

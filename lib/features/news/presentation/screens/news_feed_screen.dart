@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../core/widgets/empty_state.dart';
 import '../../../../core/widgets/error_display.dart';
 import '../../../../core/widgets/loading_widget.dart';
@@ -24,7 +25,8 @@ class _NewsFeedScreenState extends ConsumerState<NewsFeedScreen> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
       ref.read(newsProvider.notifier).loadMore();
     }
   }
@@ -48,7 +50,8 @@ class _NewsFeedScreenState extends ConsumerState<NewsFeedScreen> {
   }
 
   Widget _buildBody(NewsState state) {
-    if (state.status == NewsStatus.loading || state.status == NewsStatus.initial) {
+    if (state.status == NewsStatus.loading ||
+        state.status == NewsStatus.initial) {
       return const ArticleShimmerList();
     }
 

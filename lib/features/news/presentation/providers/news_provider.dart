@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../shared/providers/providers.dart';
 import '../../domain/entities/article.dart';
 
@@ -49,18 +50,26 @@ class NewsNotifier extends StateNotifier<NewsState> {
 
   Future<void> loadArticles({bool refresh = false}) async {
     if (refresh) {
-      state = state.copyWith(status: NewsStatus.loading, page: 1, articles: [], hasMore: true, errorMessage: null);
+      state = state.copyWith(
+        status: NewsStatus.loading,
+        page: 1,
+        articles: [],
+        hasMore: true,
+        errorMessage: null,
+      );
     } else if (state.status == NewsStatus.initial) {
       state = state.copyWith(status: NewsStatus.loading);
     }
 
-    final result = await _ref.read(newsRepositoryProvider).getTopHeadlines(
-      category: state.category,
-      page: state.page,
-    );
+    final result = await _ref
+        .read(newsRepositoryProvider)
+        .getTopHeadlines(category: state.category, page: state.page);
 
     if (result.failure != null) {
-      state = state.copyWith(status: NewsStatus.error, errorMessage: result.failure!.message);
+      state = state.copyWith(
+        status: NewsStatus.error,
+        errorMessage: result.failure!.message,
+      );
     } else {
       final newArticles = result.articles;
       state = state.copyWith(
@@ -75,15 +84,21 @@ class NewsNotifier extends StateNotifier<NewsState> {
   Future<void> loadMore() async {
     if (!state.hasMore || state.status == NewsStatus.loadingMore) return;
 
-    state = state.copyWith(status: NewsStatus.loadingMore, page: state.page + 1);
-
-    final result = await _ref.read(newsRepositoryProvider).getTopHeadlines(
-      category: state.category,
-      page: state.page,
+    state = state.copyWith(
+      status: NewsStatus.loadingMore,
+      page: state.page + 1,
     );
 
+    final result = await _ref
+        .read(newsRepositoryProvider)
+        .getTopHeadlines(category: state.category, page: state.page);
+
     if (result.failure != null) {
-      state = state.copyWith(status: NewsStatus.success, page: state.page - 1, errorMessage: result.failure!.message);
+      state = state.copyWith(
+        status: NewsStatus.success,
+        page: state.page - 1,
+        errorMessage: result.failure!.message,
+      );
     } else {
       final newArticles = result.articles;
       state = state.copyWith(

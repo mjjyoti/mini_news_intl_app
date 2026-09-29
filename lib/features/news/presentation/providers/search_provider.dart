@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../shared/providers/providers.dart';
 import '../../domain/entities/article.dart';
 
@@ -61,10 +62,15 @@ class SearchNotifier extends StateNotifier<SearchState> {
       errorMessage: null,
     );
 
-    final result = await _ref.read(newsRepositoryProvider).searchArticles(query: trimmed, page: 1);
+    final result = await _ref
+        .read(newsRepositoryProvider)
+        .searchArticles(query: trimmed, page: 1);
 
     if (result.failure != null) {
-      state = state.copyWith(status: SearchStatus.error, errorMessage: result.failure!.message);
+      state = state.copyWith(
+        status: SearchStatus.error,
+        errorMessage: result.failure!.message,
+      );
     } else {
       state = state.copyWith(
         status: SearchStatus.success,
@@ -75,17 +81,25 @@ class SearchNotifier extends StateNotifier<SearchState> {
   }
 
   Future<void> loadMore() async {
-    if (!state.hasMore || state.status == SearchStatus.loadingMore || state.query.isEmpty) return;
+    if (!state.hasMore ||
+        state.status == SearchStatus.loadingMore ||
+        state.query.isEmpty)
+      return;
 
-    state = state.copyWith(status: SearchStatus.loadingMore, page: state.page + 1);
-
-    final result = await _ref.read(newsRepositoryProvider).searchArticles(
-      query: state.query,
-      page: state.page,
+    state = state.copyWith(
+      status: SearchStatus.loadingMore,
+      page: state.page + 1,
     );
 
+    final result = await _ref
+        .read(newsRepositoryProvider)
+        .searchArticles(query: state.query, page: state.page);
+
     if (result.failure != null) {
-      state = state.copyWith(status: SearchStatus.success, page: state.page - 1);
+      state = state.copyWith(
+        status: SearchStatus.success,
+        page: state.page - 1,
+      );
     } else {
       state = state.copyWith(
         status: SearchStatus.success,
@@ -98,6 +112,8 @@ class SearchNotifier extends StateNotifier<SearchState> {
   void clear() => state = const SearchState();
 }
 
-final searchProvider = StateNotifierProvider<SearchNotifier, SearchState>((ref) {
+final searchProvider = StateNotifierProvider<SearchNotifier, SearchState>((
+  ref,
+) {
   return SearchNotifier(ref);
 });

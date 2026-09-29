@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../theme/app_theme.dart';
 
 class EmptyState extends StatelessWidget {
@@ -6,7 +7,12 @@ class EmptyState extends StatelessWidget {
   final String title;
   final String? subtitle;
 
-  const EmptyState({super.key, required this.icon, required this.title, this.subtitle});
+  const EmptyState({
+    super.key,
+    required this.icon,
+    required this.title,
+    this.subtitle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +22,11 @@ class EmptyState extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 72, color: AppTheme.textSecondary.withOpacity(0.5)),
+            Icon(
+              icon,
+              size: 72,
+              color: AppTheme.textSecondary.withOpacity(0.5),
+            ),
             const SizedBox(height: 16),
             Text(
               title,
@@ -28,7 +38,11 @@ class EmptyState extends StatelessWidget {
             ),
             if (subtitle != null) ...[
               const SizedBox(height: 8),
-              Text(subtitle!, style: const TextStyle(color: AppTheme.textSecondary), textAlign: TextAlign.center),
+              Text(
+                subtitle!,
+                style: const TextStyle(color: AppTheme.textSecondary),
+                textAlign: TextAlign.center,
+              ),
             ],
           ],
         ),

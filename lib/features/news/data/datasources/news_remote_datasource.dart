@@ -4,8 +4,15 @@ import '../../../../core/network/api_client.dart';
 import '../models/article_model.dart';
 
 abstract class NewsRemoteDataSource {
-  Future<List<ArticleModel>> getTopHeadlines({required String category, int page = 1});
-  Future<List<ArticleModel>> searchArticles({required String query, int page = 1});
+  Future<List<ArticleModel>> getTopHeadlines({
+    required String category,
+    int page = 1,
+  });
+
+  Future<List<ArticleModel>> searchArticles({
+    required String query,
+    int page = 1,
+  });
 }
 
 class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
@@ -14,7 +21,10 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
   NewsRemoteDataSourceImpl({required this.apiClient});
 
   @override
-  Future<List<ArticleModel>> getTopHeadlines({required String category, int page = 1}) async {
+  Future<List<ArticleModel>> getTopHeadlines({
+    required String category,
+    int page = 1,
+  }) async {
     final response = await apiClient.get(
       ApiConstants.topHeadlines,
       queryParams: {
@@ -33,7 +43,10 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
   }
 
   @override
-  Future<List<ArticleModel>> searchArticles({required String query, int page = 1}) async {
+  Future<List<ArticleModel>> searchArticles({
+    required String query,
+    int page = 1,
+  }) async {
     if (query.trim().isEmpty) {
       throw const ServerException(message: 'Search query cannot be empty');
     }

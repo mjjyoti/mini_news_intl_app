@@ -1,12 +1,16 @@
 import 'package:hive_flutter/hive_flutter.dart';
+
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../news/data/models/article_model.dart';
 
 abstract class FavoritesLocalDataSource {
   Future<List<ArticleModel>> getFavorites();
+
   Future<void> addFavorite(ArticleModel article);
+
   Future<void> removeFavorite(String articleId);
+
   Future<bool> isFavorite(String articleId);
 }
 
@@ -18,7 +22,10 @@ class FavoritesLocalDataSourceImpl implements FavoritesLocalDataSource {
     try {
       final values = _box.values.toList();
       return values
-          .map((e) => ArticleModel.fromHiveMap(Map<dynamic, dynamic>.from(e as Map)))
+          .map(
+            (e) =>
+                ArticleModel.fromHiveMap(Map<dynamic, dynamic>.from(e as Map)),
+          )
           .toList()
         ..sort((a, b) {
           final aDate = a.publishedAt ?? DateTime(1970);

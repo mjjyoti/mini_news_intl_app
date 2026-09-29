@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../core/widgets/empty_state.dart';
 import '../../../../core/widgets/error_display.dart';
 import '../../../../core/widgets/loading_widget.dart';
@@ -13,7 +14,8 @@ class FavoritesScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final favState = ref.watch(favoritesProvider);
 
-    if (favState.status == FavoritesStatus.loading || favState.status == FavoritesStatus.initial) {
+    if (favState.status == FavoritesStatus.loading ||
+        favState.status == FavoritesStatus.initial) {
       return const LoadingWidget(message: 'Loading favorites...');
     }
 
@@ -37,7 +39,8 @@ class FavoritesScreen extends ConsumerWidget {
       child: ListView.builder(
         physics: const AlwaysScrollableScrollPhysics(),
         itemCount: favState.articles.length,
-        itemBuilder: (context, index) => ArticleCard(article: favState.articles[index]),
+        itemBuilder: (context, index) =>
+            ArticleCard(article: favState.articles[index]),
       ),
     );
   }
