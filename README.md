@@ -110,3 +110,13 @@ mini_news_intl_app/
 └── shared/
 └── providers/
 └── providers.dart
+
+## Screenshots
+
+| Login | News Feed | Search |
+|:-----:|:---------:|:------:|
+| ![Login](screenshots/login.png) | ![News Feed](screenshots/news_feed.png) | ![Search](screenshots/search.png) |
+
+| Article Detail | Favorites |
+|:--------------:|:---------:|
+| ![Article Detail](screenshots/article_detail.png) | ![Favorites](screenshots/favorites.png) |
